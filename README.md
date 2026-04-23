@@ -1,60 +1,221 @@
-# bela-content-creator
-
-Content creator toolkit — daily industry briefing + topic recommendations with optional scripts + AI PM job search briefing.
-
-## Skills
-
-### Daily Briefing
-**Triggers:** `日报`、`每日资讯`、`daily briefing`、`today's news`
-
-Full-landscape industry digest for your domain. Covers reports, policy, industry developments, international and domestic news. Pure information — no topic selection.
-
-### Topic Picker
-**Triggers:** `选题`、`视频选题`、`脚本`、`topic`、`video topics`、`give me scripts`
-
-Scored topic recommendations tailored to your background and platform. Optionally generates full scripts matching your production constraints.
-
-First use asks 3 setup questions:
-1. Output format — combined with briefing or separate file?
-2. Frequency — every 1-3 days or weekly?
-3. Scripts — include full scripts or topic cards only?
-
-### Video Topics
-**Triggers:** `视频选题`、`口播脚本`、`video script`
-
-Full video topic cards with 2-minute monologue scripts. Includes compliance filtering for domestic tool recommendations.
-
-### Content Planner
-**Triggers:** `内容规划`、`创作者设置`、`onboarding`、`content plan`
-
-Onboarding router — guides first-time setup of your creator profile (domain, platform, background, production constraints). All other skills read from this profile.
-
-### Job Briefing
-**Triggers:** `求职日报`、`job briefing`、`今天有什么岗位`、`职位更新`、`有没有新岗位`
-
-Daily AI PM job search briefing for Shanghai market. Searches 20+ target companies (ByteDance, Ant Group, Xiaohongshu, MiniMax, DeepSeek, Moonshot AI, etc.) for social recruitment PM openings. Outputs:
-- Job recommendations with 100-point match scoring
-- P0 action items (apply today)
-- Industry funding & hiring signals
-- Optional job application tracker integration
-
-Reads candidate profile from `shared/job-seeker-profile.md` (local, not tracked) — all match scoring and search queries adapt to your specific background.
+[English](#bela-content-creator) | [中文](#bela-content-creator-中文版)
 
 ---
 
-## Getting Started
+# bela-content-creator
 
-1. Install the plugin
-2. Say any trigger word (e.g., "日报", "选题", or "求职日报")
-3. First run walks you through a quick profile setup (~1 minute)
-4. All subsequent runs are personalized to your domain, platform, and background
+**A Claude Code plugin for AI content creators** — automates your daily workflow: industry briefing, topic selection, video scripts, and job search briefing, all personalized to your background and platform.
 
-## How It Personalizes
+Built by an AI content creator who got tired of spending 2+ hours every morning manually reading news, picking topics, and writing scripts. This plugin runs those workflows inside Claude Code with a single trigger word.
 
-The plugin creates `shared/creator-profile.md` on first use, storing your domain, career background, platform strategy, and production constraints. Every search query, scoring decision, and output format is derived from this profile — nothing is hardcoded.
+## What It Does
 
-Say "update my profile" anytime to change your settings.
+| Skill | What You Say | What You Get |
+|-------|-------------|--------------|
+| **Daily Briefing** | `日报` / `daily briefing` | Full industry digest — reports, policy, launches, funding |
+| **Topic Picker** | `选题` / `video topics` | 3–5 scored topic recommendations ranked by your background and platform |
+| **Video Topics** | `视频选题` / `video script` | Topic cards with complete 2-minute monologue scripts |
+| **Content Planner** | `onboarding` / `内容规划` | First-run setup: builds your creator profile used by all other skills |
+| **Job Briefing** | `求职日报` / `job briefing` | Daily AI PM job search report — 20+ companies, match scoring, P0 actions |
 
-## Job Search Tracking (Optional)
+## Who It's For
 
-Create `shared/job-tracker.md` to enable persistent job application tracking across daily briefings.
+- AI content creators (short video, newsletter, blog) who cover tech / AI
+- Product managers or professionals running a side content channel
+- Anyone who wants to reduce daily research overhead and focus on creating
+
+## Background
+
+Most content creator workflows are manual and slow: open 5 tabs, scan Twitter/X, read WeChat posts, copy-paste into a draft. This plugin replaces that with structured, searchable, source-linked briefings that adapt to your specific domain — not generic AI news.
+
+The **Job Briefing** skill is for creators who are also navigating a job search in the AI space — it runs targeted searches across 20+ AI companies, scores each role against your background, and surfaces the P0 actions for the day.
+
+Everything personalizes to a profile you set up on first run. Nothing is hardcoded.
+
+---
+
+## Installation
+
+### Method 1 — Clone directly (recommended)
+
+```bash
+git clone https://github.com/belalee-ai/bela-content-creator.git ~/.claude/plugins/bela-content-creator
+```
+
+Then restart Claude Code (or run `/reload` if supported). The plugin skills will be available immediately.
+
+### Method 2 — Via Claude Code plugin command
+
+If your Claude Code version supports the `/plugin` command:
+
+```bash
+# In Claude Code terminal:
+/plugin install https://github.com/belalee-ai/bela-content-creator
+```
+
+> Check your Claude Code version for exact syntax. Plugin installation commands may vary across releases.
+
+### Method 3 — Superpowers / third-party plugin managers
+
+If you use the [Superpowers plugin system](https://github.com/anthropics/claude-code), you can install from within Claude Code:
+
+```
+/find-skills bela-content-creator
+```
+
+Or add this repo as a plugin source and install from the skill browser.
+
+### Method 4 — Manual copy (no git required)
+
+1. Download the ZIP: **[belalee-ai/bela-content-creator → Code → Download ZIP](https://github.com/belalee-ai/bela-content-creator/archive/refs/heads/main.zip)**
+2. Unzip and copy the folder to `~/.claude/plugins/bela-content-creator/`
+3. Restart Claude Code
+
+---
+
+## Quick Start
+
+1. Install using any method above
+2. Open Claude Code in any project directory
+3. Type a trigger word: `日报`, `选题`, or `求职日报`
+4. First run: a 5-question onboarding builds your creator profile (~2 minutes)
+5. Every subsequent run uses your profile — no repeated setup
+
+**Update your profile anytime:** say `update my profile` or `更新我的创作者设置`
+
+---
+
+## Privacy
+
+Your creator profile and job search profile are stored **locally only** in `shared/` within your working directory. This directory is gitignored — it is never committed or synced to any remote.
+
+The plugin has no network calls of its own. All searches run through Claude Code's built-in web search.
+
+---
+
+## Structure
+
+```
+.claude-plugin/
+  plugin.json          # Plugin manifest
+skills/
+  daily-briefing/      # Industry digest
+  topic-picker/        # Scored topic recommendations
+  video-topics/        # Topic cards + scripts
+    references/
+      compliance-rules.md
+  content-planner/     # Onboarding + profile router
+  job-briefing/        # AI PM job search briefing
+    job-seeker-profile.template.md
+```
+
+---
+
+---
+
+# bela-content-creator 中文版
+
+**面向 AI 内容创作者的 Claude Code 插件** — 自动化你每天的内容工作流：行业日报、选题推荐、视频脚本、求职日报，全部根据你的背景和平台定制。
+
+作者是一位 AI 内容博主，厌倦了每天早上手动花 2 小时读资讯、挑选题、写脚本。这个插件把这些工作流搬进了 Claude Code，一个触发词搞定。
+
+## 功能概览
+
+| Skill | 触发词 | 输出内容 |
+|-------|--------|----------|
+| **每日日报** | `日报` / `每日资讯` / `daily briefing` | 全景行业日报：报告、政策、融资、产品动态 |
+| **选题推荐** | `选题` / `视频选题` | 3–5 个评分排序的选题，结合你的背景和平台 |
+| **视频选题** | `视频选题` / `口播脚本` | 选题卡 + 完整 2 分钟口播脚本 |
+| **内容规划** | `onboarding` / `内容规划` | 首次使用引导：建立创作者画像，供其他 skill 读取 |
+| **求职日报** | `求职日报` / `今天有什么岗位` | 每日 AI PM 岗位搜索：20+ 家公司、匹配度评分、今日行动项 |
+
+## 适合谁用
+
+- 做 AI / 科技方向内容的短视频博主、公众号作者、Newsletter 写作者
+- 有副业内容创作的产品经理或职场人
+- 想减少每日信息收集时间、把精力放在创作上的人
+
+## 背景
+
+大多数创作者的日常工作流都是手动且低效的：开 5 个 tab、刷 Twitter/X、看微信公众号、复制粘贴整理。这个插件用结构化、有来源链接的日报取代了这个流程，且内容根据你的具体领域动态生成，不是泛泛的 AI 资讯汇总。
+
+**求职日报** skill 面向同时在找 AI 方向岗位的创作者——它每天搜索 20+ 家 AI 公司的 PM 岗位，对每个岗位打分，并给出当天的 P0 行动项。
+
+所有内容根据你首次运行时设置的画像个性化生成，没有任何硬编码。
+
+---
+
+## 安装方式
+
+### 方式一 — 直接 clone（推荐）
+
+```bash
+git clone https://github.com/belalee-ai/bela-content-creator.git ~/.claude/plugins/bela-content-creator
+```
+
+重启 Claude Code（或运行 `/reload`），插件的所有 skill 立即可用。
+
+### 方式二 — 通过 Claude Code 插件命令安装
+
+如果你的 Claude Code 版本支持 `/plugin` 命令：
+
+```bash
+# 在 Claude Code 终端中输入：
+/plugin install https://github.com/belalee-ai/bela-content-creator
+```
+
+> 具体语法因 Claude Code 版本不同可能有差异，请以当前版本文档为准。
+
+### 方式三 — 通过 Superpowers / 第三方 skill 管理器
+
+如果你已安装 [Superpowers 插件系统](https://github.com/anthropics/claude-code)，可以在 Claude Code 中直接搜索安装：
+
+```
+/find-skills bela-content-creator
+```
+
+或将本仓库添加为插件源，通过 skill 浏览器安装。
+
+### 方式四 — 手动下载（无需 git）
+
+1. 下载 ZIP：**[点击这里下载](https://github.com/belalee-ai/bela-content-creator/archive/refs/heads/main.zip)**
+2. 解压后，将文件夹复制到 `~/.claude/plugins/bela-content-creator/`
+3. 重启 Claude Code
+
+---
+
+## 快速上手
+
+1. 用上面任意方式安装
+2. 在任意项目目录打开 Claude Code
+3. 输入触发词：`日报`、`选题` 或 `求职日报`
+4. 首次运行：5 个问题建立你的创作者画像（约 2 分钟）
+5. 此后每次运行都使用你的画像，无需重复设置
+
+**随时更新画像：** 说 `update my profile` 或 `更新我的创作者设置`
+
+---
+
+## 隐私说明
+
+你的创作者画像和求职画像**只存在本地**，保存在工作目录下的 `shared/` 文件夹中。该目录已加入 `.gitignore`，永远不会被提交或同步到远端。
+
+插件本身不发起任何网络请求，所有搜索通过 Claude Code 内置的网络搜索功能执行。
+
+---
+
+## 目录结构
+
+```
+.claude-plugin/
+  plugin.json                # 插件元信息
+skills/
+  daily-briefing/            # 行业日报
+  topic-picker/              # 选题推荐
+  video-topics/              # 视频选题 + 脚本
+    references/
+      compliance-rules.md    # 合规红线（国内工具推荐限制）
+  content-planner/           # Onboarding + 画像路由器
+  job-briefing/              # AI PM 求职日报
+    job-seeker-profile.template.md  # 求职画像模板
+```
