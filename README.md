@@ -105,7 +105,13 @@ skills/
     references/
       compliance-rules.md
   content-planner/     # Onboarding + profile router
-  job-briefing/        # AI PM job search briefing
+  job-briefing/        # AI PM job search briefing (6 modes)
+    references/
+      search-sources.md       # Company lists + search templates by industry
+    templates/
+      daily-job-report.md     # Output template
+      user-profile-template.md
+      bookmarks-template.md
 creator-profile.template.md   # Unified profile template (copy to shared/)
 ```
 
@@ -216,6 +222,12 @@ skills/
     references/
       compliance-rules.md    # 合规红线（国内工具推荐限制）
   content-planner/           # Onboarding + 画像路由器
-  job-briefing/              # AI PM 求职日报
+  job-briefing/              # AI PM 求职日报（6 种运行模式）
+    references/
+      search-sources.md            # 各行业公司清单 + 搜索词模板
+    templates/
+      daily-job-report.md          # 日报输出模板
+      user-profile-template.md     # 求职画像模板
+      bookmarks-template.md        # 岗位标记模板
 creator-profile.template.md       # 统一画像模板（复制到 shared/ 填写即可）
 ```
