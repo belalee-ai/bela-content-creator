@@ -1,0 +1,5 @@
+# Local profile data — keep private, do not commit
+shared/
+
+# OS files
+.DS_Store

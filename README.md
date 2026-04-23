@@ -38,7 +38,7 @@ Daily AI PM job search briefing for Shanghai market. Searches 20+ target compani
 - Industry funding & hiring signals
 - Optional job application tracker integration
 
-Tailored to candidates with e-commerce growth (Pinduoduo/TEMU) and subscription monetization (Meitu) backgrounds.
+Reads candidate profile from `shared/job-seeker-profile.md` (local, not tracked) — all match scoring and search queries adapt to your specific background.
 
 ---
 

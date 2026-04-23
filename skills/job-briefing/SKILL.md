@@ -4,22 +4,25 @@ description: >
   Daily AI PM job search briefing for Shanghai market. Use when the user says
   "求职日报", "job briefing", "今天有什么岗位", "职位更新", "有没有新岗位",
   "帮我找工作", or "招聘动态". Outputs job recommendations with match analysis,
-  P0 action items, and industry hiring trends. Targeted at senior PM candidates
-  with e-commerce growth and AI product backgrounds.
+  P0 action items, and industry hiring trends.
 ---
 
 # Job Briefing — 上海 AI PM 求职日报
 
 每日自动搜索上海 AI 方向社招 PM 岗位，生成匹配度分析 + 行动优先级 + 行业动态。
 
-## 候选人画像（固定）
+## 候选人画像
 
-本 skill 服务固定候选人画像，无需 onboarding：
+读取 `shared/job-seeker-profile.md`。如果该文件不存在，询问用户以下信息并创建：
 
-- **背景：** 拼多多/TEMU（增长产品、广告投放、ROAS 优化）+ 美图秀秀（会员体系、订阅商业化）
-- **目标：** 上海，AI 方向 PM 岗，社招（P6-P8 level）
-- **优势：** 增长黑客思维、商业化产品经验、AI 工具使用深度、内容创作跨界背景
-- **薪资锚定：** 参考大厂中高级 PM 市场水位，不做硬性过滤
+1. **职业背景** — 过往公司、岗位、核心经验（增长/商业化/AI 等方向）
+2. **求职目标** — 目标城市、行业方向、岗位级别（P6/P7/P8 或对应级别）
+3. **核心优势** — 可迁移的关键能力、差异化背景
+4. **薪资预期** — 是否做硬性过滤（可选填）
+
+保存为 YAML 格式，字段：`background`、`target`、`strengths`、`salary_filter`。
+
+文件创建后，所有匹配分析和搜索策略均从该文件动态读取，不使用任何硬编码个人信息。
 
 ## 搜索目标公司
 
@@ -88,7 +91,7 @@ description: >
 | 维度 | 权重 | 评分依据 |
 |------|------|----------|
 | 岗位方向匹配 | 35% | AI 产品/增长/商业化方向越近越高 |
-| 背景契合度 | 30% | 拼多多增长 + 美图商业化经验直接可迁移 |
+| 背景契合度 | 30% | 候选人核心经验与 JD 要求的直接可迁移程度（读自 profile） |
 | 公司成长性 | 20% | 融资阶段、行业地位、AI 战略清晰度 |
 | 地点/形式 | 15% | 上海优先，远程/hybrid 次之，外地减分 |
 
@@ -183,7 +186,7 @@ description: >
 ## 运行规则
 
 - 每个岗位必须有 JD 链接，无链接不收录
-- 匹配分析必须引用候选人具体背景（拼多多增长/美图商业化），不写通用理由
+- 匹配分析必须引用 `shared/job-seeker-profile.md` 里的具体背景，不写通用理由
 - 行业动态每条必须有"对你意味着什么"，不写纯事实罗列
 - 岗位发布超 30 天标注警告，不删除
 - 搜索结果 < 5 个有效岗位 → 标注"⚠️ 今日新岗位较少，建议明日再查"
