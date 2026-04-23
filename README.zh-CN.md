@@ -2,113 +2,78 @@
 
 # bela-content-creator
 
-**面向 AI 内容创作者的 Claude Code 插件** — 自动化你每天的内容工作流：行业日报、选题推荐、视频脚本、求职日报，全部根据你的背景和平台定制。
+做内容博主之前，我以为最难的是拍视频。
 
-作者是一位 AI 内容博主，厌倦了每天早上手动花 2 小时读资讯、挑选题、写脚本。这个插件把这些工作流搬进了 Claude Code，一个触发词搞定。
+做了之后才发现，最难的是每天早上——刷完 Twitter、看完公众号、整理完资讯、想完选题，往往已经过了两个小时，还没开始做正事。
 
-## 功能概览
+这个插件就是为了干掉这两个小时的。
 
-| Skill | 触发词 | 输出内容 |
-|-------|--------|----------|
-| **每日日报** | `日报` / `每日资讯` / `daily briefing` | 全景行业日报：报告、政策、融资、产品动态 |
-| **选题推荐** | `选题` / `视频选题` | 3–5 个评分排序的选题，结合你的背景和平台 |
-| **视频选题** | `视频选题` / `口播脚本` | 选题卡 + 完整 2 分钟口播脚本 |
-| **内容规划** | `onboarding` / `内容规划` | 首次使用引导：建立创作者画像，供其他 skill 读取 |
-| **求职日报** | `求职日报` / `今天有什么岗位` | 每日 AI PM 岗位搜索：20+ 家公司、匹配度评分、今日行动项 |
-
-## 适合谁用
-
-- 做 AI / 科技方向内容的短视频博主、公众号作者、Newsletter 写作者
-- 有副业内容创作的产品经理或职场人
-- 想减少每日信息收集时间、把精力放在创作上的人
-
-## 背景
-
-大多数创作者的日常工作流都是手动且低效的：开 5 个 tab、刷 Twitter/X、看微信公众号、复制粘贴整理。这个插件用结构化、有来源链接的日报取代了这个流程，且内容根据你的具体领域动态生成，不是泛泛的 AI 资讯汇总。
-
-**求职日报** skill 面向同时在找 AI 方向岗位的创作者——它每天搜索 20+ 家 AI 公司的 PM 岗位，对每个岗位打分，并给出当天的 P0 行动项。
-
-所有内容根据你首次运行时设置的画像个性化生成，没有任何硬编码。
+装好之后，在 Claude Code 里说一个词，它帮你搜、帮你整理、帮你打分、帮你写脚本。第一次用的时候回答几个问题，之后每次都按你的情况来，不用重复设置。
 
 ---
 
-## 安装方式
+## 里面有什么
 
-### 方式一 — 直接 clone（推荐）
+**每日日报** — 说 `日报`
+
+搜你关注领域的最新动态：行业报告、融资、产品发布、政策变化。每条都有来源链接，按类别整理好，不是乱堆一起的链接列表。
+
+**选题推荐** — 说 `选题`
+
+根据你的背景和平台，推 3–5 个选题，每个都有打分和推荐理由。要脚本的话顺便写一篇——2 分钟口播，按你的风格来。
+
+**求职日报** — 说 `求职日报`
+
+每天搜 20 多家 AI 公司的 PM 岗位，对着你的经历打匹配分，告诉你今天该投哪个。你标记过的岗位下次还会继续追踪。
+
+**内容规划** — 说 `onboarding`
+
+第一次使用的引导。问你几个问题：做什么领域、发哪个平台、有什么背景、有什么限制。大概两分钟，之后所有功能都按这个来。
+
+---
+
+## 它怎么知道你是谁
+
+第一次用的时候它会问你，然后把你的回答存到 `shared/creator-profile.md`——一个只存在你本地的文件，不会上传任何地方。之后每次用，它读这个文件，搜索词、打分逻辑、脚本风格都跟着你走。
+
+随时说 `更新我的创作者设置` 可以改。
+
+---
+
+## 安装
 
 ```bash
 git clone https://github.com/belalee-ai/bela-content-creator.git ~/.claude/plugins/bela-content-creator
 ```
 
-重启 Claude Code（或运行 `/reload`），插件的所有 skill 立即可用。
+重启 Claude Code，就好了。
 
-### 方式二 — 通过 Claude Code 插件命令安装
+**其他安装方式**
 
-如果你的 Claude Code 版本支持 `/plugin` 命令：
-
-```bash
-# 在 Claude Code 终端中输入：
-/plugin install https://github.com/belalee-ai/bela-content-creator
-```
-
-> 具体语法因 Claude Code 版本不同可能有差异，请以当前版本文档为准。
-
-### 方式三 — 通过 Superpowers / 第三方 skill 管理器
-
-如果你已安装 [Superpowers 插件系统](https://github.com/anthropics/claude-code)，可以在 Claude Code 中直接搜索安装：
-
-```
-/find-skills bela-content-creator
-```
-
-或将本仓库添加为插件源，通过 skill 浏览器安装。
-
-### 方式四 — 手动下载（无需 git）
-
-1. 下载 ZIP：**[点击这里下载](https://github.com/belalee-ai/bela-content-creator/archive/refs/heads/main.zip)**
-2. 解压后，将文件夹复制到 `~/.claude/plugins/bela-content-creator/`
-3. 重启 Claude Code
+- 在 Claude Code 里输入 `/plugin install https://github.com/belalee-ai/bela-content-creator`（部分版本支持）
+- 装了 Superpowers 的话，输入 `/find-skills bela-content-creator`
+- [下载 ZIP](https://github.com/belalee-ai/bela-content-creator/archive/refs/heads/main.zip)，解压后拖到 `~/.claude/plugins/bela-content-creator/`，重启
 
 ---
 
-## 快速上手
+## 关于隐私
 
-1. 用上面任意方式安装
-2. 在任意项目目录打开 Claude Code
-3. 输入触发词：`日报`、`选题` 或 `求职日报`
-4. 首次运行：5 个问题建立你的创作者画像（约 2 分钟）
-5. 此后每次运行都使用你的画像，无需重复设置
-
-**随时更新画像：** 说 `update my profile` 或 `更新我的创作者设置`
-
----
-
-## 隐私说明
-
-你的创作者画像和求职画像**只存在本地**，保存在工作目录下的 `shared/` 文件夹中。该目录已加入 `.gitignore`，永远不会被提交或同步到远端。
-
-插件本身不发起任何网络请求，所有搜索通过 Claude Code 内置的网络搜索功能执行。
+你的画像保存在工作目录的 `shared/` 文件夹下，已经加了 `.gitignore`，提交代码的时候不会带上去。插件本身不会往外发请求，搜索走的是 Claude Code 自带的联网功能。
 
 ---
 
 ## 目录结构
 
 ```
-.claude-plugin/
-  plugin.json                # 插件元信息
+.claude-plugin/plugin.json        插件信息（版本、关键词）
 skills/
-  daily-briefing/            # 行业日报
-  topic-picker/              # 选题推荐
-  video-topics/              # 视频选题 + 脚本
-    references/
-      compliance-rules.md    # 合规红线（国内工具推荐限制）
-  content-planner/           # Onboarding + 画像路由器
-  job-briefing/              # AI PM 求职日报（6 种运行模式）
-    references/
-      search-sources.md            # 各行业公司清单 + 搜索词模板
-    templates/
-      daily-job-report.md          # 日报输出模板
-      user-profile-template.md     # 求职画像模板
-      bookmarks-template.md        # 岗位标记模板
-creator-profile.template.md       # 统一画像模板（复制到 shared/ 填写即可）
+  daily-briefing/SKILL.md         每日行业日报
+  topic-picker/SKILL.md           选题打分推荐
+  video-topics/SKILL.md           视频选题 + 口播脚本
+    references/compliance-rules.md 合规红线
+  content-planner/SKILL.md        首次设置引导
+  job-briefing/SKILL.md           AI PM 求职日报（6 种模式）
+    references/search-sources.md  各行业公司清单
+    templates/                    日报输出模板
+creator-profile.template.md       画像模板，复制到 shared/ 填写
 ```

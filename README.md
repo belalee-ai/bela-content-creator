@@ -2,113 +2,74 @@
 
 # bela-content-creator
 
-**A Claude Code plugin for AI content creators** — automates your daily workflow: industry briefing, topic selection, video scripts, and job search briefing, all personalized to your background and platform.
+I used to spend two hours every morning before I could actually start creating: scan the news, figure out what to cover, draft a script outline, check if there's a job worth applying for. All of it manual, all of it repetitive.
 
-Built by an AI content creator who got tired of spending 2+ hours every morning manually reading news, picking topics, and writing scripts. This plugin runs those workflows inside Claude Code with a single trigger word.
-
-## What It Does
-
-| Skill | What You Say | What You Get |
-|-------|-------------|--------------|
-| **Daily Briefing** | `日报` / `daily briefing` | Full industry digest — reports, policy, launches, funding |
-| **Topic Picker** | `选题` / `video topics` | 3–5 scored topic recommendations ranked by your background and platform |
-| **Video Topics** | `视频选题` / `video script` | Topic cards with complete 2-minute monologue scripts |
-| **Content Planner** | `onboarding` / `内容规划` | First-run setup: builds your creator profile used by all other skills |
-| **Job Briefing** | `求职日报` / `job briefing` | Daily AI PM job search report — 20+ companies, match scoring, P0 actions |
-
-## Who It's For
-
-- AI content creators (short video, newsletter, blog) who cover tech / AI
-- Product managers or professionals running a side content channel
-- Anyone who wants to reduce daily research overhead and focus on creating
-
-## Background
-
-Most content creator workflows are manual and slow: open 5 tabs, scan Twitter/X, read WeChat posts, copy-paste into a draft. This plugin replaces that with structured, searchable, source-linked briefings that adapt to your specific domain — not generic AI news.
-
-The **Job Briefing** skill is for creators who are also navigating a job search in the AI space — it runs targeted searches across 20+ AI companies, scores each role against your background, and surfaces the P0 actions for the day.
-
-Everything personalizes to a profile you set up on first run. Nothing is hardcoded.
+This is a Claude Code plugin that does those four things for you. One trigger word, and it runs the whole workflow — searches, summarizes, scores, and writes — based on a profile it builds from you the first time you use it.
 
 ---
 
-## Installation
+## What's inside
 
-### Method 1 — Clone directly (recommended)
+**Daily Briefing** — say `日报` or `daily briefing`
+
+Searches across your domain and pulls together a structured digest: industry reports, funding news, product launches, policy moves. Organized by category, every item has a source link and a credibility rating. Not a link dump — an actual briefing you can read in 5 minutes.
+
+**Topic Picker** — say `选题` or `video topics`
+
+Takes your background and platform into account and surfaces 3–5 topic ideas, each with a score and a reason. If you want a script too, ask for one — it'll write a 2-minute monologue in your style.
+
+**Job Briefing** — say `求职日报` or `job briefing`
+
+Searches 20+ AI companies for open PM roles, scores each one against your experience, and tells you which ones to act on today. Tracks the ones you bookmark across sessions.
+
+**Content Planner** — say `onboarding`
+
+First-run setup. Asks you 5 questions about your domain, platforms, background, and production constraints. Saves a local profile that every other skill reads from. Takes about 2 minutes.
+
+---
+
+## How it knows about you
+
+First time you use any skill, it walks you through a short setup and saves a profile to `shared/creator-profile.md` — a local file that never leaves your machine. Every search query, every scoring decision, every script it writes is based on that profile.
+
+Say `update my profile` anytime to change your settings.
+
+---
+
+## Install
 
 ```bash
 git clone https://github.com/belalee-ai/bela-content-creator.git ~/.claude/plugins/bela-content-creator
 ```
 
-Then restart Claude Code (or run `/reload` if supported). The plugin skills will be available immediately.
+Restart Claude Code. Done.
 
-### Method 2 — Via Claude Code plugin command
+**Other ways to install**
 
-If your Claude Code version supports the `/plugin` command:
-
-```bash
-# In Claude Code terminal:
-/plugin install https://github.com/belalee-ai/bela-content-creator
-```
-
-> Check your Claude Code version for exact syntax. Plugin installation commands may vary across releases.
-
-### Method 3 — Superpowers / third-party plugin managers
-
-If you use the [Superpowers plugin system](https://github.com/anthropics/claude-code), you can install from within Claude Code:
-
-```
-/find-skills bela-content-creator
-```
-
-Or add this repo as a plugin source and install from the skill browser.
-
-### Method 4 — Manual copy (no git required)
-
-1. Download the ZIP: **[belalee-ai/bela-content-creator → Code → Download ZIP](https://github.com/belalee-ai/bela-content-creator/archive/refs/heads/main.zip)**
-2. Unzip and copy the folder to `~/.claude/plugins/bela-content-creator/`
-3. Restart Claude Code
-
----
-
-## Quick Start
-
-1. Install using any method above
-2. Open Claude Code in any project directory
-3. Type a trigger word: `日报`, `选题`, or `求职日报`
-4. First run: a 5-question onboarding builds your creator profile (~2 minutes)
-5. Every subsequent run uses your profile — no repeated setup
-
-**Update your profile anytime:** say `update my profile` or `更新我的创作者设置`
+- `/plugin install https://github.com/belalee-ai/bela-content-creator` — if your Claude Code version supports it
+- `/find-skills bela-content-creator` — if you have Superpowers installed
+- [Download ZIP](https://github.com/belalee-ai/bela-content-creator/archive/refs/heads/main.zip), unzip to `~/.claude/plugins/bela-content-creator/`, restart
 
 ---
 
 ## Privacy
 
-Your creator profile and job search profile are stored **locally only** in `shared/` within your working directory. This directory is gitignored — it is never committed or synced to any remote.
-
-The plugin has no network calls of its own. All searches run through Claude Code's built-in web search.
+Your profile lives in `shared/` inside your working directory. That folder is in `.gitignore` — it won't be committed or synced anywhere. The plugin itself makes no network calls; all searches go through Claude Code's built-in web search.
 
 ---
 
-## Structure
+## Repo layout
 
 ```
-.claude-plugin/
-  plugin.json          # Plugin manifest
+.claude-plugin/plugin.json        version, keywords, author
 skills/
-  daily-briefing/      # Industry digest
-  topic-picker/        # Scored topic recommendations
-  video-topics/        # Topic cards + scripts
-    references/
-      compliance-rules.md
-  content-planner/     # Onboarding + profile router
-  job-briefing/        # AI PM job search briefing (6 modes)
-    references/
-      search-sources.md       # Company lists + search templates by industry
-    templates/
-      daily-job-report.md     # Output template
-      user-profile-template.md
-      bookmarks-template.md
-creator-profile.template.md   # Unified profile template (copy to shared/)
+  daily-briefing/SKILL.md         industry digest
+  topic-picker/SKILL.md           scored topic recommendations
+  video-topics/SKILL.md           topic cards + monologue scripts
+    references/compliance-rules.md
+  content-planner/SKILL.md        first-run profile setup
+  job-briefing/SKILL.md           AI PM job search (6 modes)
+    references/search-sources.md  company lists by industry
+    templates/                    output templates
+creator-profile.template.md       copy this to shared/ and fill in
 ```
