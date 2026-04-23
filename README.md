@@ -106,7 +106,7 @@ skills/
       compliance-rules.md
   content-planner/     # Onboarding + profile router
   job-briefing/        # AI PM job search briefing
-    job-seeker-profile.template.md
+creator-profile.template.md   # Unified profile template (copy to shared/)
 ```
 
 ---
@@ -217,5 +217,5 @@ skills/
       compliance-rules.md    # 合规红线（国内工具推荐限制）
   content-planner/           # Onboarding + 画像路由器
   job-briefing/              # AI PM 求职日报
-    job-seeker-profile.template.md  # 求职画像模板
+creator-profile.template.md       # 统一画像模板（复制到 shared/ 填写即可）
 ```
