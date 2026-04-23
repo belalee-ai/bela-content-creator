@@ -1,0 +1,9 @@
+{
+  "name": "bela-content-creator",
+  "version": "0.3.0",
+  "description": "Content creator toolkit: daily industry briefing + topic recommendations with optional video scripts + AI PM job search briefing. Personalizes to your domain, platform, and background via onboarding.",
+  "author": {
+    "name": "Bela"
+  },
+  "keywords": ["content-creator", "blogger", "topics", "briefing", "video", "scripts", "job-search"]
+}
